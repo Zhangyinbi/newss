@@ -1,0 +1,3 @@
+include ':app', ':phonehelper', ':viewpager', ':myapplication', ':phone1'
+include ':slidingmenu_library'
+include ':viewpagerindecater_library'

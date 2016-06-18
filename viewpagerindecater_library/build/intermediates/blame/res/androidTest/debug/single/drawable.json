@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "D:\\Users\\Administrator\\AndroidStudioProjects\\Helloworld\\viewpagerindecater_library\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\vpi__tab_indicator.xml",
+        "source": "D:\\Users\\Administrator\\AndroidStudioProjects\\Helloworld\\viewpagerindecater_library\\build\\intermediates\\bundles\\debug\\res\\drawable\\vpi__tab_indicator.xml"
+    },
+    {
+        "merged": "D:\\Users\\Administrator\\AndroidStudioProjects\\Helloworld\\library\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\vpi__tab_indicator.xml",
+        "source": "D:\\Users\\Administrator\\AndroidStudioProjects\\Helloworld\\library\\build\\intermediates\\bundles\\debug\\res\\drawable\\vpi__tab_indicator.xml"
+    },
+    {
+        "merged": "D:\\Users\\Administrator\\AndroidStudioProjects\\Helloworld\\viewpagerindecaterlibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\vpi__tab_indicator.xml",
+        "source": "D:\\Users\\Administrator\\AndroidStudioProjects\\Helloworld\\viewpagerindecaterlibrary\\build\\intermediates\\bundles\\debug\\res\\drawable\\vpi__tab_indicator.xml"
+    }
+]
