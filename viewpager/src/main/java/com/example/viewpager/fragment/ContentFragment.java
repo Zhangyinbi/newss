@@ -83,6 +83,9 @@ public class ContentFragment extends BaseFragment {
             @Override
             public void onPageSelected(int position) {
 
+//                System.out.println("主界面");
+
+
                 mPagerlist.get(position).initData();
             }
 

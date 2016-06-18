@@ -69,6 +69,18 @@ public class LeftMenuFragment extends BaseFragment{
     }
 
     private void setCurrentMenuDetailPager(int position) {
+//        System.out.println("点击也签");
+
+
+
+
+
+
+
+
+
+
+
 
         MainActivity mainUi= (MainActivity) mActivity;
         ContentFragment fragment= mainUi.getContentFragment();//获取主页面fragment
