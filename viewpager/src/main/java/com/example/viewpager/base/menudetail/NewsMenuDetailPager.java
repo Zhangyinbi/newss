@@ -3,13 +3,16 @@ package com.example.viewpager.base.menudetail;
 import android.app.Activity;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.viewpager.MainActivity;
 import com.example.viewpager.R;
 import com.example.viewpager.base.BaseMenuDetailPager;
 import com.example.viewpager.base.TabDetailPager;
 import com.example.viewpager.demain.NewsData;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.viewpagerindicator.TabPageIndicator;
@@ -38,6 +41,30 @@ public class NewsMenuDetailPager extends BaseMenuDetailPager {
         ViewUtils.inject(this,view);
         indicator = (TabPageIndicator) view.findViewById(R.id.indicator);
         indicator.setOverScrollMode(mViewPager.OVER_SCROLL_NEVER);//去掉ViewPager两边的光晕效果
+
+        //当ViewPager和TabPageIndicator合用的时候  要设置TabPageIndicator的滑动事件
+        indicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+            @Override
+            public void onPageSelected(int position) {
+                MainActivity mainUi= (MainActivity) mActivity;
+                SlidingMenu slidingMenu=  mainUi.getSlidingMenu();
+                if (position==0){
+                    slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+                }else{
+                    slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
+                }
+
+            }
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
         return view;
     }
 

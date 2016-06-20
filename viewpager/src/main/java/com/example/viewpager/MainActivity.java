@@ -3,6 +3,7 @@ package com.example.viewpager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
@@ -33,8 +34,14 @@ public class MainActivity extends SlidingFragmentActivity {
      * 初始化Fragment
      */
     private void initFragment() {
-        FragmentManager fm = getSupportFragmentManager();
+      /*  FragmentManager f = getSupportFragmentManager();
+        Log.e("哈哈哈", fm.toString());
+//        android.app.FragmentManager f=getFragmentManager();
+        Log.e("哈哈哈", f.toString());*/
+
+
         //开启事务
+        FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         //替换帧布局
         ft.replace(R.id.left_menu, new LeftMenuFragment(), FRAGMENT_LEFT_MENU);

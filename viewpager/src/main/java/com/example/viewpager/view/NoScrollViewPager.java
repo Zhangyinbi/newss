@@ -19,7 +19,7 @@ public class NoScrollViewPager extends ViewPager{
 
     /**
      * @param ev
-     * @return   表示时间是否拦截   返回fasle表示不拦截
+     * @return   表示事件是否拦截   返回fasle表示不拦截
      */
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {

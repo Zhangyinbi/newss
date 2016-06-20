@@ -8,6 +8,8 @@ import android.view.MotionEvent;
 /**
  * <--重写ViewPager中的dispatchTouchEven方法-->为也签页请求不要拦截往右的事件
  * Created by Administrator on 2016/6/17 0017.
+ *
+ * 过度用的  后来没有用到
  */
 public class HorizonTalScrollViewPager extends ViewPager{
 
