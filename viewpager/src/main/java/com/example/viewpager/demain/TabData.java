@@ -15,7 +15,7 @@ public class TabData {
                 '}';
     }
 
-    class TabDataile {
+    public class TabDataile {
         public TapDataConteng pagebean;
 
         @Override
@@ -25,7 +25,7 @@ public class TabData {
                     '}';
         }
 
-        class TapDataConteng {
+        public class TapDataConteng {
             public ArrayList<ChildContent> contentlist;
 
             @Override
@@ -35,13 +35,13 @@ public class TabData {
                         '}';
             }
 
-            class ChildContent{
+            public  class ChildContent{
                 @Override
                 public String toString() {
                     return "ChildContent{" +
                             "desc='" + desc + '\'' +
                             ", link='" + link + '\'' +
-                            ", pubData='" + pubData + '\'' +
+                            ", pubData='" + pubDate + '\'' +
                             ", source='" + source + '\'' +
                             ", title='" + title + '\'' +
                             '}';
@@ -49,7 +49,7 @@ public class TabData {
 
                 public String desc;
                 public String link;
-                public String pubData;
+                public String pubDate;
                 public String source;
                 public String title;
             }

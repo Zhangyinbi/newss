@@ -43,8 +43,10 @@
 
     <ListView
         android:id="@+id/lv_list"
+        android:listSelector="@android:color/transparent"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:overScrollMode="never"
         android:layout_weight="1"></ListView>
 
 </LinearLayout>

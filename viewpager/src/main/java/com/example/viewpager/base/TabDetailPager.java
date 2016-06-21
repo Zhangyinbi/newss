@@ -1,6 +1,7 @@
 package com.example.viewpager.base;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
@@ -10,7 +11,9 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +32,8 @@ import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.viewpagerindicator.CirclePageIndicator;
 
+import org.w3c.dom.Text;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -40,20 +45,28 @@ import java.util.ArrayList;
  * Created by Administrator on 2016/6/16 0016.
  */
 public class TabDetailPager extends BaseMenuDetailPager {
-    NewsData.NewsMenuData.NewsTabData mTabData;
+    ArrayList<TabData.TabDataile.TapDataConteng.ChildContent> mNewsList;
+
+    ArrayList<NewsData.NewsMenuData.NewsTabData> channelList;
     TabData mTabDetailData;
     private ViewPager mViewpager;
     private String mUrl;
     private ArrayList<ImageView> mImagelist;
-//    @ViewInject(R.id.tv_title)
+    //    @ViewInject(R.id.tv_title)
     private TextView tvTitle;
     private ArrayList<String> mTopNewsList;
     private CirclePageIndicator mIndicator;
+    private int position;
+    private ListView lvList;
 
-    public TabDetailPager(Activity activity, NewsData.NewsMenuData.NewsTabData newsTabData) {
+    public TabDetailPager(Activity activity, ArrayList<NewsData.NewsMenuData.NewsTabData> newsTabData) {
         super(activity);
-        mTabData = newsTabData;
-        mUrl = GlobalContants.NEWS_TAB_URL + "&" + mTabData.channelId;
+        channelList = newsTabData;
+        mUrl = GlobalContants.NEWS_TAB_URL;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
     }
 
     @Override
@@ -65,15 +78,18 @@ public class TabDetailPager extends BaseMenuDetailPager {
         tvText.setTextColor(Color.RED);*/
         View view = View.inflate(mActivity, R.layout.tab_detail_pager, null);
 //        ViewUtils.inject(mActivity, view);
-        tvTitle= (TextView) view.findViewById(R.id.tv_title);
-        mIndicator= (CirclePageIndicator) view.findViewById(R.id.indicator);
+        tvTitle = (TextView) view.findViewById(R.id.tv_title);
+        lvList = (ListView) view.findViewById(R.id.lv_list);
+        mIndicator = (CirclePageIndicator) view.findViewById(R.id.indicator);
         mViewpager = (ViewPager) view.findViewById(R.id.vp_news);
         mIndicator.setOverScrollMode(mViewpager.OVER_SCROLL_NEVER);//没起作用
         return view;
     }
 
+
     @Override
     public void initData() {
+
         //得到网络图片
         getDataFromService();
     }
@@ -99,7 +115,9 @@ public class TabDetailPager extends BaseMenuDetailPager {
             public void run() {
                 Message mes;
                 try {
-                    URL url = new URL(mUrl);
+//                    Log.e("初始化新闻LiseView---", "点击"+position );
+//                    Log.e("初始化新闻id---", "点击"+mUrl+"&"+channelList.get(position).channelId );
+                    URL url = new URL(mUrl + "&channelId=" + channelList.get(position).channelId);
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     conn.setRequestMethod("GET");
                     conn.setConnectTimeout(2000);
@@ -158,10 +176,21 @@ public class TabDetailPager extends BaseMenuDetailPager {
 
     protected void parseData(String result) {
         Gson gson = new Gson();
-
         mTabDetailData = gson.fromJson(result, TabData.class);
+        if (mTabDetailData == null) {
+            return;
+        }
+        if (mTabDetailData.showapi_res_body == null) {
+            return;
+        }
+        if (mTabDetailData.showapi_res_body.pagebean == null) {
+            return;
+        }
+//        Log.e("谁是空", mTabDetailData.showapi_res_body.pagebean.contentlist.toString());
+        mNewsList = mTabDetailData.showapi_res_body.pagebean.contentlist;
+
 //        System.out.println("详情111" + mTabDetailData);         为何打印两次
-        mTopNewsList=new ArrayList<String>();
+        mTopNewsList = new ArrayList<String>();
         mTopNewsList.add("梦想家园");
         mTopNewsList.add("男人专属");
         mTopNewsList.add("最美微笑");
@@ -185,7 +214,6 @@ public class TabDetailPager extends BaseMenuDetailPager {
         mImagelist.add(view3);
         mImagelist.add(view4);
         mViewpager.setAdapter(new PagerAdapter() {
-
             @Override
             public int getCount() {
                 return mImagelist.size();
@@ -214,8 +242,8 @@ public class TabDetailPager extends BaseMenuDetailPager {
         mIndicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
             }
+
 
             @Override
             public void onPageSelected(int position) {
@@ -231,5 +259,50 @@ public class TabDetailPager extends BaseMenuDetailPager {
         mIndicator.onPageSelected(0);
         mIndicator.setSnap(true);//快照显示
         tvTitle.setText(mTopNewsList.get(0));
+        lvList.setAdapter(new NewsAdapter());
+    }
+
+    class NewsAdapter extends BaseAdapter {
+
+        @Override
+        public int getCount() {
+            return mNewsList.size();
+        }
+
+        @Override
+        public TabData.TabDataile.TapDataConteng.ChildContent getItem(int position) {
+            return mNewsList.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ViewHolder holder;
+            if (convertView == null) {
+                convertView = View.inflate(mActivity, R.layout.list_news_item, null);
+                holder = new ViewHolder();
+                holder.tvTitle = (TextView) convertView.findViewById(R.id.tv_title);
+                holder.tvDate = (TextView) convertView.findViewById(R.id.tv_data);
+                convertView.setTag(holder);
+            } else {
+                holder = (ViewHolder) convertView.getTag();
+            }
+            TabData.TabDataile.TapDataConteng.ChildContent item = getItem(position);
+
+            Log.e("重置数据", "数据设置" + item.title);
+            holder.tvDate.setText(item.pubDate);
+            holder.tvTitle.setText(item.title);
+
+            return convertView;
+        }
+    }
+
+    static class ViewHolder {
+        public TextView tvTitle;
+        public TextView tvDate;
     }
 }
