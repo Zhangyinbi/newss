@@ -1,52 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="185dp">
-
-        <com.example.viewpager.view.TopNewsViewPager
-            android:id="@+id/vp_news"
-            android:layout_width="match_parent"
-            android:layout_height="185dp"></com.example.viewpager.view.TopNewsViewPager>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:background="#8000"
-            android:padding="2dp">
-
-            <TextView
-                android:id="@+id/tv_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#fff"
-                android:textSize="18sp" />
 
 
-            <com.viewpagerindicator.CirclePageIndicator
-                android:id="@+id/indicator"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:padding="10dip"
-                app:fillColor="#f00"
-                app:pageColor="@android:color/darker_gray"
-                app:strokeWidth="0dp" />
-        </RelativeLayout>
-    </RelativeLayout>
-
-    <ListView
+    <com.example.viewpager.view.RefreshListView
         android:id="@+id/lv_list"
+        android:scrollbars="none"
         android:listSelector="@android:color/transparent"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:divider="#20d4b9b9"
+        android:dividerHeight="1dp"
         android:overScrollMode="never"
-        android:layout_weight="1"></ListView>
+        android:layout_weight="1"></com.example.viewpager.view.RefreshListView>
 
 </LinearLayout>

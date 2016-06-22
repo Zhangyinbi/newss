@@ -21,6 +21,7 @@ import com.example.viewpager.R;
 import com.example.viewpager.demain.NewsData;
 import com.example.viewpager.demain.TabData;
 import com.example.viewpager.global.GlobalContants;
+import com.example.viewpager.view.RefreshListView;
 import com.google.gson.Gson;
 import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.HttpUtils;
@@ -52,12 +53,12 @@ public class TabDetailPager extends BaseMenuDetailPager {
     private ViewPager mViewpager;
     private String mUrl;
     private ArrayList<ImageView> mImagelist;
-    //    @ViewInject(R.id.tv_title)
+    @ViewInject(R.id.tv_title)
     private TextView tvTitle;
     private ArrayList<String> mTopNewsList;
     private CirclePageIndicator mIndicator;
     private int position;
-    private ListView lvList;
+    private RefreshListView lvList;
 
     public TabDetailPager(Activity activity, ArrayList<NewsData.NewsMenuData.NewsTabData> newsTabData) {
         super(activity);
@@ -77,12 +78,19 @@ public class TabDetailPager extends BaseMenuDetailPager {
         tvText.setText("页签详情页");
         tvText.setTextColor(Color.RED);*/
         View view = View.inflate(mActivity, R.layout.tab_detail_pager, null);
-//        ViewUtils.inject(mActivity, view);
-        tvTitle = (TextView) view.findViewById(R.id.tv_title);
-        lvList = (ListView) view.findViewById(R.id.lv_list);
+        View header = View.inflate(mActivity, R.layout.list_header_topnews, null);//加载头布局
+        ViewUtils.inject(this,header);
+
+
+//        tvTitle = (TextView) header.findViewById(R.id.tv_title);
+        lvList = (RefreshListView) view.findViewById(R.id.lv_list);
+        lvList.addHeaderView(header);
+
+
         mIndicator = (CirclePageIndicator) view.findViewById(R.id.indicator);
+
         mViewpager = (ViewPager) view.findViewById(R.id.vp_news);
-        mIndicator.setOverScrollMode(mViewpager.OVER_SCROLL_NEVER);//没起作用
+        mViewpager.setOverScrollMode(mViewpager.OVER_SCROLL_NEVER);//没起作用
         return view;
     }
 
@@ -257,7 +265,7 @@ public class TabDetailPager extends BaseMenuDetailPager {
             }
         });
         mIndicator.onPageSelected(0);
-        mIndicator.setSnap(true);//快照显示
+        mIndicator.setSnap(true);//快照显示,禁掉了滑动效果
         tvTitle.setText(mTopNewsList.get(0));
         lvList.setAdapter(new NewsAdapter());
     }
@@ -293,7 +301,7 @@ public class TabDetailPager extends BaseMenuDetailPager {
             }
             TabData.TabDataile.TapDataConteng.ChildContent item = getItem(position);
 
-            Log.e("重置数据", "数据设置" + item.title);
+//            Log.e("重置数据", "数据设置" + item.title);
             holder.tvDate.setText(item.pubDate);
             holder.tvTitle.setText(item.title);
 
