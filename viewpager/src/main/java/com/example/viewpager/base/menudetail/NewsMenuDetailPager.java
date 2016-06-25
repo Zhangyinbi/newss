@@ -117,7 +117,7 @@ public class NewsMenuDetailPager extends BaseMenuDetailPager {
         public Object instantiateItem(ViewGroup container, int position) {
             TabDetailPager pager = mPagerList.get(position);
             container.addView(pager.mRootView);
-            Log.e("初始化主界面---", "点击"+position );
+//            Log.e("初始化主界面---", "点击"+position );
             pager.setPosition(position);
             pager.initData();//数据初始化，可以优化，放置于不同的地方
             return pager.mRootView;

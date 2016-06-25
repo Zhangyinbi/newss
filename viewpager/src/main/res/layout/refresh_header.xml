@@ -19,6 +19,7 @@
             android:src="@drawable/ic_file_download_black" />
 
         <ProgressBar
+            android:indeterminateDrawable="@drawable/custom_progress"
             android:id="@+id/pb_progress"
             android:visibility="invisible"
             android:layout_width="wrap_content"
@@ -47,8 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
-            android:text="2016-06-21 17:04:40"
             android:textColor="@android:color/darker_gray"
-            android:textSize="25sp" />
+            android:textSize="14sp" />
     </LinearLayout>
 </LinearLayout>

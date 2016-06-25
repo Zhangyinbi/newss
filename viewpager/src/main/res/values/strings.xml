@@ -10,4 +10,5 @@
     <string name="vision">大视野</string>
     <string name="gxService">个性化服务</string>
     <string name="CheckIntnet">请检查您的网络链接是否正常</string>
+    <string name="share">wechat</string>
 </resources>

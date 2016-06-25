@@ -12,7 +12,6 @@ import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import static com.example.viewpager.R.id.tv_txt;
 
 public class SplashActivity extends Activity{
     private ImageView rlRoot;
@@ -22,7 +21,7 @@ public class SplashActivity extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         rlRoot = (ImageView) findViewById(R.id.rl_Root);//找到需要旋转的控件
-        tv= (TextView) findViewById(tv_txt);
+        tv= (TextView) findViewById(R.id.tv_txt);
         startAnimation();//启动动漫（一张图片的旋转）
     }
 
@@ -32,7 +31,7 @@ public class SplashActivity extends Activity{
     private void startAnimation() {
 
         //RotateAnimation 旋转动画效果
-        RotateAnimation ra = new RotateAnimation(0f, 360f, RotateAnimation.RELATIVE_TO_SELF, 0.5f, RotateAnimation.RELATIVE_TO_SELF, 0.5f);
+        RotateAnimation ra = new RotateAnimation(0, 360, RotateAnimation.RELATIVE_TO_SELF, 0.5f, RotateAnimation.RELATIVE_TO_SELF, 0.5f);
         ra.setDuration(2000);//动画执行时间
         ra.setFillAfter(true);//动画执行完后保持最终状态
 

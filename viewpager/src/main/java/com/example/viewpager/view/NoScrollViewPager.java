@@ -8,7 +8,7 @@ import android.view.MotionEvent;
 /**
  * Created by Administrator on 2016/6/14 0014.
  */
-public class NoScrollViewPager extends ViewPager{
+public class NoScrollViewPager extends ViewPager {
     public NoScrollViewPager(Context context) {
         super(context);
     }
@@ -19,13 +19,17 @@ public class NoScrollViewPager extends ViewPager{
 
     /**
      * @param ev
-     * @return   表示事件是否拦截   返回fasle表示不拦截
+     * @return 表示事件是否拦截   返回fasle表示不拦截
      */
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         return false;
     }
 
+    /**
+     * @param ev 让ViewPager不滑动
+     * @return
+     */
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
         return false;
