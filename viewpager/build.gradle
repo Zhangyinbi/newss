@@ -28,4 +28,5 @@ dependencies {
     compile files('libs/xUtils-2.6.14.jar')
     compile project(':viewpagerindecater_library')
     compile files('libs/ShareSDK-Wechat-Moments-2.7.3.jar')
+    compile files('libs/Volley.jar')
 }

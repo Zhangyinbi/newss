@@ -2,6 +2,7 @@ package com.example.viewpager.base;
 
 import android.app.Activity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -21,6 +22,7 @@ public class BasePager {
     public View mRootView;//布局界面
     public TextView tvTitle;
     public FrameLayout flLayout;
+    public ImageButton btnPhoto;
 
     public BasePager(Activity activity) {
         mActivity = activity;
@@ -35,6 +37,7 @@ public class BasePager {
         tvTitle = (TextView) mRootView.findViewById(R.id.tv_title);
         flLayout = (FrameLayout) mRootView.findViewById(R.id.fl_content);
         btnMenu = (ImageButton) mRootView.findViewById(R.id.btn_menu);
+        btnPhoto = (ImageButton) mRootView.findViewById(R.id.btn_photo);
         btnMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

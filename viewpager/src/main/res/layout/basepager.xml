@@ -8,30 +8,41 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/title_red_bg">
+
         <TextView
             android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:textColor="#fff"
-            android:textSize="22sp"
             android:padding="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="@string/vision"
-            />
+            android:textColor="#fff"
+            android:textSize="22sp" />
+
         <ImageButton
+            android:id="@+id/btn_menu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/img_menu"
-            android:background="@null"
-            android:id="@+id/btn_menu"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="5dp"/>
+            android:layout_marginLeft="5dp"
+            android:background="@null"
+            android:src="@mipmap/img_menu" />
+
+        <ImageButton
+            android:id="@+id/btn_photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:visibility="gone"
+            android:layout_alignParentRight="true"
+            android:background="@null"
+            android:src="@drawable/gridview" />
     </RelativeLayout>
 
     <FrameLayout
         android:id="@+id/fl_content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
-    </FrameLayout>
+        android:layout_weight="1"></FrameLayout>
 </LinearLayout>

@@ -3,10 +3,13 @@ package com.example.viewpager.base.impl;
 import android.app.Activity;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.viewpager.R;
+import com.example.viewpager.Utils.CacheUtils;
 import com.example.viewpager.base.BaseMenuDetailPager;
 import com.example.viewpager.base.BasePager;
 import com.example.viewpager.base.menudetail.InteractMenuDstailPager;
@@ -37,9 +40,6 @@ public class NewsPager extends BasePager {
     }
 
     private LeftMenuFragment leftMenuFragment;
-
-
-
     @Override
     public void initData() {
 //      Log.e("test",count1+"==");
@@ -58,9 +58,15 @@ public class NewsPager extends BasePager {
         //传递缓存数据  null必须是json格式的字符串，否则下面从网络获取数据会出异常
 //        paseData("null");
         tvTitle.setText("新闻");
-        getDataFromService();
-
         setSlidingMenuEnable(true);
+        String cache = CacheUtils.getCache(GlobalContants.NEWS_MENU_URL, mActivity);
+        if (!TextUtils.isEmpty(cache)){//读取缓存,如果存在 无需访问网络
+            paseData(cache);
+        }
+            getDataFromService();//不管有没有缓存都获取最新数据，保证数据最新
+
+
+
 
 
     }
@@ -132,6 +138,7 @@ public class NewsPager extends BasePager {
             if (msg.what == 0) {
                 String result = (String) msg.obj;
                 paseData(result);
+                CacheUtils.setCache(GlobalContants.NEWS_MENU_URL,result,mActivity);
 //                setCurrentMenuDetailPager(0);
             } else if (msg.what == 1) {
                 //传递缓存数据  这个实在不联网的情况下需要调用另一个方法，给界面填充数据内容，读取缓存
@@ -161,7 +168,7 @@ public class NewsPager extends BasePager {
         mPagers = new ArrayList<BaseMenuDetailPager>();
         mPagers.add(new NewsMenuDetailPager(mActivity,data.showapi_res_body.channelList));
         mPagers.add(new TopicMenuDstailPager(mActivity));
-        mPagers.add(new PhotoMenuDstailPager(mActivity));
+        mPagers.add(new PhotoMenuDstailPager(mActivity,btnPhoto));
         mPagers.add(new InteractMenuDstailPager(mActivity));
         setCurrentMenuDetailPager(0);
     }
@@ -187,9 +194,16 @@ public class NewsPager extends BasePager {
             BaseMenuDetailPager pager = mPagers.get(position);//获取当前要显示的菜单详情
             flLayout.removeAllViews();
             title();
+
             tvTitle.setText(mMenuList.get(position));
             flLayout.addView(pager.mRootView);//讲菜单详情设置给帧布局
             pager.initData();//初始化当前页面的数据
+            if (pager instanceof  PhotoMenuDstailPager){
+                btnPhoto.setVisibility(View.VISIBLE);
+//                Log.e("哈哈哈哈哈哈啊哈哈哈哈哈哈哈", "1112222222222111");
+            }else {
+                btnPhoto.setVisibility(View.GONE);
+            }
         }
     }
 }

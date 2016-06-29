@@ -41,7 +41,7 @@ public class MainActivity extends SlidingFragmentActivity {
 
 
         //开启事务
-        FragmentManager fm = getSupportFragmentManager();
+        FragmentManager fm = this.getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         //替换帧布局
         ft.replace(R.id.left_menu, new LeftMenuFragment(), FRAGMENT_LEFT_MENU);

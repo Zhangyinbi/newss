@@ -2,6 +2,7 @@ package com.example.viewpager.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -104,15 +105,16 @@ public class RefreshListView extends ListView implements OnItemClickListener {
         mHeaderViewheight = mHeaderView.getMeasuredHeight();
         mHeaderView.setPadding(0, -mHeaderViewheight, 0, 0);//隐藏头布局
         initArrowAnim();
-
         tvTime.setText("最后刷新时间" + getCurrentTime());
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent ev) {
+    public boolean onTouchEvent(MotionEvent ev) {//设置触摸监听
         switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN:
+
                 startY = (int) ev.getRawY();
+
                 break;
             case MotionEvent.ACTION_MOVE:
                 if (startY == -1) {
@@ -133,7 +135,7 @@ public class RefreshListView extends ListView implements OnItemClickListener {
                         mCurrentState = STATE_PULL_REFRESH;
                         refreshState();
                     }
-                    return true;
+//                    return true;
                 }
                 break;
             case MotionEvent.ACTION_UP:
@@ -142,6 +144,7 @@ public class RefreshListView extends ListView implements OnItemClickListener {
                     mCurrentState = STATE_REFRESHING;
                     refreshState();
                     mHeaderView.setPadding(0, 0, 0, 0);//正常显示
+                    return true;
                 } else if (mCurrentState == STATE_PULL_REFRESH) {
                     mHeaderView.setPadding(0, -mHeaderViewheight, 0, 0);//隐藏
                 }
@@ -156,11 +159,11 @@ public class RefreshListView extends ListView implements OnItemClickListener {
      * 刷新下拉控件的样式
      */
     private void refreshState() {
-        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd   hh:mm:ss");
+      /*  DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd   hh:mm:ss");
         long now = System.currentTimeMillis();
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(now);
-        String str = formatter.format(calendar.getTime());
+        String str = formatter.format(calendar.getTime());*/
         switch (mCurrentState) {
             case STATE_PULL_REFRESH:
                 tvTitle.setText("下拉刷新");
@@ -217,9 +220,13 @@ public class RefreshListView extends ListView implements OnItemClickListener {
         mItemClickListener = listener;
     }
 
+
+
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (mItemClickListener!=null){
+            Log.d("yz","==onItemClick");
             mItemClickListener.onItemClick(parent,view,position-getHeaderViewsCount(),id);
         }
 

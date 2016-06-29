@@ -50,7 +50,6 @@ public class NewsDetailActivity extends Activity implements View.OnClickListener
         settings.setJavaScriptEnabled(true);//让其支持JS  默认为false
         settings.setBuiltInZoomControls(true);//显示缩小放大按钮
         settings.setUseWideViewPort(true);//支持双击缩放
-
         mWebView.setWebViewClient(new WebViewClient() {
             /**
              * @param view   网页开始加载的时候的回调
@@ -81,7 +80,8 @@ public class NewsDetailActivity extends Activity implements View.OnClickListener
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
 //                return super.shouldOverrideUrlLoading(view, url);
-                view.loadUrl(url);
+//                view.clearHistory();
+                view.loadUrl(url);//强制跳转WebView
                 return true;
             }
         });
@@ -97,7 +97,7 @@ public class NewsDetailActivity extends Activity implements View.OnClickListener
              */
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
-                System.out.println("进度————" + newProgress);
+//                System.out.println("进度————" + newProgress);
                 super.onProgressChanged(view, newProgress);
             }
 
@@ -121,6 +121,7 @@ public class NewsDetailActivity extends Activity implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_back:
+                mWebView.clearHistory();
                 finish();
                 break;
             case R.id.btn_share:
@@ -135,16 +136,16 @@ public class NewsDetailActivity extends Activity implements View.OnClickListener
     private void showShare() {
         ShareSDK.initSDK(this);
         OnekeyShare oks = new OnekeyShare();
-        oks.setTheme(OnekeyShareTheme.fromValue(1));
+        oks.setTheme(OnekeyShareTheme.fromValue(1));//调整分享出来的格式
         //关闭sso授权
         oks.disableSSOWhenAuthorize();
 
-// 分享时Notification的图标和文字  2.5.9以后的版本不调用此方法
+        // 分享时Notification的图标和文字  2.5.9以后的版本不调用此方法
         //oks.setNotification(R.drawable.ic_launcher, getString(R.string.app_name));
         // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
         oks.setTitle(getString(R.string.share));
         // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
-        oks.setTitleUrl("http://sharesdk.cn");
+        oks.setTitleUrl("http://sharesdk.cn");//点击分享会跳到哪个界面
         // text是分享文本，所有平台都需要这个字段
         oks.setText("我是分享文本");
         // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数

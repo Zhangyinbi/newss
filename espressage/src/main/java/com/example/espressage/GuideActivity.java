@@ -1,5 +1,6 @@
 package com.example.espressage;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v4.view.PagerAdapter;
@@ -16,7 +17,7 @@ import com.viewpagerindicator.CirclePageIndicator;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GuideActivity extends AppCompatActivity {
+public class GuideActivity extends Activity {
     private Button mBtn;
     private CirclePageIndicator mIndicator;
     private ViewPager mViewPager;
@@ -104,7 +105,7 @@ public class GuideActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
-                if (position == 3) {
+                if (position == views.size()-1) {
                     mBtn.setVisibility(View.VISIBLE);
                 }else {
                     mBtn.setVisibility(View.GONE);
