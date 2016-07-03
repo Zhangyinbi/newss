@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context="com.example.espressage.ExpressList">
 
-    <ListView
+    <com.example.espressage.view.RefreshListView
         android:id="@+id/lv_company"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -16,5 +16,5 @@
         android:dividerHeight="10dp"
         android:listSelector="@android:color/transparent"
         android:overScrollMode="never"
-        android:scrollbars="none"></ListView>
+        android:scrollbars="none"></com.example.espressage.view.RefreshListView>
 </LinearLayout>

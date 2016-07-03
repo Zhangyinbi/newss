@@ -6,6 +6,9 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.espressage.MainActivity;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
+
 /**
  * Created by Administrator on 2016/6/27 0027.
  */
@@ -19,4 +22,5 @@ public abstract class BasePager {
     public View initViews() {
         return null;
     }
+
 }

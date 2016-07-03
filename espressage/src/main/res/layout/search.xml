@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#2000"
-    android:padding="15dp">
+    android:padding="15dp"
+    >
 
     <LinearLayout
         android:id="@+id/ll"
@@ -74,6 +75,7 @@
                 android:src="@mipmap/img" />
 
             <EditText
+                android:gravity="center"
                 android:id="@+id/et_num"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -82,6 +84,7 @@
                 android:layout_weight="1"
                 android:background="@null"
                 android:hint="请输入条形码"
+                android:inputType="number"
                 android:singleLine="true"
                 android:textSize="20sp" />
 
@@ -119,13 +122,14 @@
 
             <TextView
                 android:id="@+id/et_name"
+                android:gravity="center"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="0dp"
                 android:layout_marginLeft="9dp"
                 android:layout_weight="1"
                 android:background="@null"
-                android:hint="请选择快递公司"
+                android:hint="点击选择快递公司"
                 android:singleLine="true"
                 android:textSize="20sp" />
 
@@ -169,6 +173,7 @@
             android:background="@drawable/button_selector"
             android:padding="10dp"
             android:text="查询"
+            android:id="@+id/btn_search"
             android:textSize="20sp" />
     </LinearLayout>
 

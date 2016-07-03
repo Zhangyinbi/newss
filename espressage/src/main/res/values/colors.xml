@@ -4,5 +4,11 @@
     <color name="colorPrimaryDark">#f00</color>
     <color name="colorAccent">#FF4081</color>
     <color name="red">#df00</color>
+    <color name="def">#dfff</color>
+    <color name="redd">#f73938</color>
+    <color name="gray">#999999</color>
+    <color name="g">#bbbbbb</color>
+
+
 
 </resources>

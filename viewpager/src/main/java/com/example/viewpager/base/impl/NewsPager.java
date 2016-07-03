@@ -152,7 +152,7 @@ public class NewsPager extends BasePager {
     };
 
     /**
-     * @param result 传的是一个json格式的字符串  如果选择网络获取，其他格式会出出一次
+     * @param result 传的是一个json格式的字符串  如果选择网络获取，其他格式会出异常
      */
     private void paseData(String result) {
      /*   //给侧边栏设置网络数据

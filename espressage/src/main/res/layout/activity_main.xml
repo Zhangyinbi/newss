@@ -9,20 +9,24 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
+
         <RelativeLayout
             android:id="@+id/rl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#f00"
-            android:padding="10dp">
-
+            android:background="#f73938"
+           >
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+
+                android:scaleType="fitXY"
+                android:id="@+id/btn_setting"
+                android:layout_width="40dp"
+                android:layout_centerVertical="true"
+                android:layout_height="40dp"
                 android:background="@android:color/transparent"
                 android:padding="5dp"
+                android:layout_marginLeft="5dp"
                 android:src="@mipmap/home" />
 
             <TextView
@@ -35,12 +39,26 @@
                 android:textSize="20sp" />
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:id="@+id/iv_zan"
+                android:layout_marginRight="5dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:padding="5dp"
+                android:layout_margin="10dp"
                 android:src="@mipmap/top_right" />
+
+            <ImageView
+                android:id="@+id/iv_sum"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:scaleType="fitXY"
+               android:layout_margin="5dp"
+                android:visibility="invisible"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/dianzan" />
         </RelativeLayout>
 
 

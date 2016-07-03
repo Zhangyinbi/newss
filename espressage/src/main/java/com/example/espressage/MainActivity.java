@@ -1,43 +1,115 @@
 package com.example.espressage;
 
 import android.content.Intent;
-import android.support.v4.app.FragmentActivity;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.view.PagerAdapter;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.example.espressage.Utils.MyDbOpenHelper;
 import com.example.espressage.base.BasePager;
 import com.example.espressage.extendsbasepager.CallPhone;
 import com.example.espressage.extendsbasepager.History;
 import com.example.espressage.extendsbasepager.Search;
 import com.example.espressage.view.NoScrollViewPager;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
+import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 
 import java.util.ArrayList;
 
-public class MainActivity extends FragmentActivity{
-
+public class MainActivity extends SlidingFragmentActivity {
+    private Animation btnAnim;
+    private Animation layout;
     private TextView tvTitle;
     private RadioGroup rGroup;
     private ArrayList<BasePager> mPagerlist;
 
     private NoScrollViewPager mViewPager;
     public FrameLayout main_content;
+    private ImageView tvSetting;
+    private ImageView ivZan;
+    private ImageView ivSum;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        getWindow().setStatusBarColor(getResources().getColor(R.color.red));
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        setBehindContentView(R.layout.left_menu);//设置侧边栏
+        MyDbOpenHelper helper =new MyDbOpenHelper(this);
+
+        SlidingMenu slidingMenu = getSlidingMenu();//获取侧边栏对象
+        slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);//设置全屏触摸
+        slidingMenu.setBehindOffset(260);
+//        slidingMenu.setAboveOffset(40);
         setContentView(R.layout.activity_main);
         main_content = (FrameLayout) findViewById(R.id.main_content);
         tvTitle = (TextView) findViewById(R.id.tv_title);
         rGroup = (RadioGroup) findViewById(R.id.rGroup);
+        tvSetting = (ImageView) findViewById(R.id.btn_setting);
+        ivZan = (ImageView) findViewById(R.id.iv_zan);
+        ivSum = (ImageView) findViewById(R.id.iv_sum);
+        layout=AnimationUtils.loadAnimation(this,R.anim.layout_anim);
+        btnAnim = AnimationUtils.loadAnimation(this, R.anim.btn_anim);
+        ivZan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ivZan.startAnimation(btnAnim);
+
+            }
+        });
+        layout.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                ivSum.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        btnAnim.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                ivSum.setVisibility(View.VISIBLE);
+                ivSum.startAnimation(layout);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+
+        tvSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggleSlidingMenu();
+            }
+        });
         mViewPager = (NoScrollViewPager) findViewById(R.id.vp_viewpager);
         initData();
+
     }
 
     @Override
@@ -46,36 +118,47 @@ public class MainActivity extends FragmentActivity{
     }
 
     private void initData() {
-        mPagerlist=new ArrayList<BasePager>();
+        mPagerlist = new ArrayList<BasePager>();
         mPagerlist.add((new Search(this)));
         mPagerlist.add(new History(this));
         mPagerlist.add(new CallPhone(this));
         mViewPager.setAdapter(new ContentAdapter());
 
         rGroup.check(R.id.rb_search);
-        tvTitle.setText(((RadioButton)rGroup.getChildAt(0)).getText());
+        tvTitle.setText(((RadioButton) rGroup.getChildAt(0)).getText());
         rGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                     case R.id.rb_search:
-                        RadioButton rb= (RadioButton) group.getChildAt(0);
-                        mViewPager.setCurrentItem(0,false);
+                        setSlidingMenuEnable(true);
+                        tvSetting.setVisibility(View.VISIBLE);
+                        RadioButton rb = (RadioButton) group.getChildAt(0);
+                        mViewPager.setCurrentItem(0, false);
                         tvTitle.setText(rb.getText());
                         break;
                     case R.id.rb_history:
-                        RadioButton rb1= (RadioButton) group.getChildAt(1);
-                        mViewPager.setCurrentItem(1,false);
+                        setSlidingMenuEnable(false);
+                        tvSetting.setVisibility(View.GONE);
+                        RadioButton rb1 = (RadioButton) group.getChildAt(1);
+                        mViewPager.setCurrentItem(1, false);
                         tvTitle.setText(rb1.getText());
                         break;
                     case R.id.rb_tell:
-                        RadioButton rb2= (RadioButton) group.getChildAt(2);
-                        mViewPager.setCurrentItem(2,false);
+                        setSlidingMenuEnable(false);
+                        tvSetting.setVisibility(View.GONE);
+                        RadioButton rb2 = (RadioButton) group.getChildAt(2);
+                        mViewPager.setCurrentItem(2, false);
                         tvTitle.setText(rb2.getText());
                         break;
                 }
             }
         });
+    }
+
+    private void toggleSlidingMenu() {
+        SlidingMenu slidingMenu = getSlidingMenu();
+        slidingMenu.toggle();//切换状态，显示时隐藏，隐藏时显示
     }
 
     class ContentAdapter extends PagerAdapter {
@@ -91,7 +174,7 @@ public class MainActivity extends FragmentActivity{
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
-          container.addView(mPagerlist.get(position).mRootView);
+            container.addView(mPagerlist.get(position).mRootView);
             return mPagerlist.get(position).mRootView;
         }
 
@@ -104,16 +187,26 @@ public class MainActivity extends FragmentActivity{
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode){
+        switch (requestCode) {
             case 0:
-                if (resultCode==RESULT_OK){
+                if (resultCode == RESULT_OK) {
                     String companyName = data.getStringExtra("key");
-                    Search.setName(companyName);
+                    int position = data.getIntExtra("num", 0);
+                    Search.setName(companyName, position);
                 }
                 break;
             default:
                 break;
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public void setSlidingMenuEnable(boolean enable) {
+        SlidingMenu slidingMenu = getSlidingMenu();
+        if (enable) {
+            slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+        } else {
+            slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
+        }
     }
 }
