@@ -23,4 +23,6 @@ public abstract class BasePager {
         return null;
     }
 
+    public void initData() {
+    }
 }
